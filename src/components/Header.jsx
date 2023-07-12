@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAuth } from 'context/AuthContext'
 
 const StyledHeader = styled.header`
   display: flex;
@@ -22,11 +23,13 @@ const StyledGreetingText = styled.div`
 `;
 
 const Header = () => {
+  const { currentMember } = useAuth()
+  const username = currentMember?.name
   return (
     <StyledHeader>
       <h3>Tasks</h3>
       <StyledGreetingText>
-        Hi <span>user</span>
+        Hi <span>{ username }</span>
       </StyledGreetingText>
     </StyledHeader>
   );
