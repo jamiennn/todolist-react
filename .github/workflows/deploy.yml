@@ -2,9 +2,9 @@ name: Deploy to GitHub pages
 
 on:
   push:
-    branches: [record]
+    branches: [main]
   pull_request:
-    branches: [record]
+    branches: [main]
 
 jobs:
   build:
@@ -22,15 +22,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-          repo-token: ${{ secrets.SECRET }}
 
-      - name: Install dependencis
+      - name: Install dependencies
         run: npm install
 
       - name: Deploy
         run: |
-          git remote set-url origin https://git:${{ secrets.SECRET }}
-          npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"@github.com/${{ github.repository }}.git
+          git config --global user.name $user_name
+          git config --global user.email $user_email
+          git remote set-url origin https://${github_token}@github.com/${repository}
           npm run deploy
         env:
           user_name: 'github-actions[bot]'
