@@ -1,0 +1,40 @@
+name: Deploy to GitHub pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          repo-token: ${{ secrets.SECRET }}
+
+      - name: Install dependencis
+        run: npm install
+
+      - name: Deploy
+        run: |
+          git remote set-url origin https://git:${{ secrets.SECRET }}
+          npx gh-pages -d build -u "github-actions-bot <support+actions@github.com>"@github.com/${{ github.repository }}.git
+          npm run deploy
+        env:
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          github_token: ${{ secrets.SECRET }}
+          repository: ${{ github.repository }}
+  
