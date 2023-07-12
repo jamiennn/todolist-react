@@ -34,7 +34,6 @@ const StyledButton = styled.button`
 `;
 
 const Footer = ({count}) => {
-  const navigate = useNavigate()
   const { logout } = useAuth()
 
   const handleLogout = () => {

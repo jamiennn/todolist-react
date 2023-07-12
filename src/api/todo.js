@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-const baseUrl = 'https://todo-list.alphacamp.io/api'
+const baseURL = 'https://todo-list.alphacamp.io/api'
 
-const axiosInstance = axios.create({baseUrl})
+const axiosInstance = axios.create({baseURL})
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("authToken")
@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
 
 export const getTodos = async () => {
   try {
-    const res = await axiosInstance.get(`${baseUrl}/todos`)
+    const res = await axiosInstance.get(`${baseURL}/todos`)
     return res.data.data
   } catch (e) {
     console.error('[Get Todos failed]: ', e)
@@ -22,7 +22,7 @@ export const getTodos = async () => {
 export const createTodo = async (payload) => {
   try {
     const { title, isDone } = payload
-    const res = await axiosInstance.post(`${baseUrl}/todos`, {
+    const res = await axiosInstance.post(`${baseURL}/todos`, {
       title,
       isDone
     })
@@ -34,7 +34,7 @@ export const createTodo = async (payload) => {
 export const patchTodo = async (payload) => {
   try {
       const {id, title, isDone} = payload
-      const res = await axiosInstance.patch(`${baseUrl}/todos/${id}`, {
+      const res = await axiosInstance.patch(`${baseURL}/todos/${id}`, {
         title,
         isDone
       })
@@ -45,7 +45,7 @@ export const patchTodo = async (payload) => {
 }
 export const deleteTodo = async (id) => {
   try {
-    const res = await axiosInstance.delete(`${baseUrl}/todos/${id}`)
+    const res = await axiosInstance.delete(`${baseURL}/todos/${id}`)
     return res.data.data
   } catch (e) {
     console.error(e)

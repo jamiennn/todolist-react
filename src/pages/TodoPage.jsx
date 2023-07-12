@@ -14,6 +14,7 @@ const TodoPage = () => {
   const { isAuthenticated } = useAuth()
 
   useEffect(() => {
+    if (Object.is(isAuthenticated, null)) return 
     if (!isAuthenticated) return navigate("/login")
   }, [navigate, isAuthenticated])
 
